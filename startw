@@ -1,0 +1,6 @@
+#!/bin/sh
+
+dwl -s 'dwlstartup'
+# while true; do
+#     dwl -s 'dwlstartup'
+# done

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Restart Audio Server (Pipewire & Wireplumber)
+systemctl restart --user pipewire.service
+systemctl restart --user wireplumber.service
+
+# Display monitor
+monitor_count=$(xrandr --listmonitors | awk '/Monitors:/ {print $2}')
+if [ "$monitor_count" = "2" ]; then
+    wlr-randr --output HDMI-A-2 --mode 1920x1080@60Hz --pos 0,0 \
+              --output eDP-1    --mode 1920x1080      --pos 0,1080
+else
+    wlr-randr --output eDP-1    --mode 1920x1080      --pos 0,0
+fi
+
+# Wallpaper
+swww-daemon &
+swww img ~/pic/Wallpaper/User/fedora_01.png
+
+# Statusbar
+dwlb &
+dwlbstatus | dwlb -status-stdin all &
+
+# Default GTK Theme, Icon Theme, Cursor Size, Font Name
+gnome_schema="org.gnome.desktop.interface"
+gtk_theme="NumixCodedark"
+icon_theme="Numix"
+cursor_size="24"
+cursor_theme="Adwaita"
+font_name="JetBrainsMono Nerd Font Bandit 11.5"
+gsettings set "$gnome_schema" gtk-theme "$gtk_theme"
+gsettings set "$gnome_schema" icon-theme "$icon_theme"
+gsettings set "$gnome_schema" cursor-size "$cursor_size"
+gsettings set "$gnome_schema" cursor-theme "$cursor_theme"
+gsettings set "$gnome_schema" font-name "$font_name"
+
+# Terminal foot server
+foot --server <&-

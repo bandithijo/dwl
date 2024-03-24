@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# codedark
+j4-dmenu-desktop \
+    --dmenu="bemenu -i -p ' Apps:' -W 1 -H '28px' --cw '1px' --ch '20px' --hp '10px' --fn 'JetBrainsMono Nerd Font Bandit 15px' --tb '#005F87' --tf '#D4D4D4' --fb '#1E1E1E' --ff '#D4D4D4' --nb '#1E1E1E' --nf '#D4D4D4' --ab '#1E1E1E' --af '#D4D4D4' --hb '#005F87' --hf '#D4D4D4' --sb '#005F87' --sf '#D4D4D4'" \
+    --no-generic --use-xdg-de

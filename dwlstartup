@@ -10,18 +10,18 @@ systemctl restart --user wireplumber.service
 monitor_count=$(xrandr --listmonitors | awk '/Monitors:/ {print $2}')
 if [ "$monitor_count" = "2" ]; then
     wlr-randr --output HDMI-A-2 --mode 1920x1080@60Hz --pos 0,0 \
-              --output eDP-1    --mode 1920x1080      --pos 0,1080 --preferred
+              --output eDP-1    --mode 1920x1080      --pos 0,1080
 else
-    wlr-randr --output eDP-1    --mode 1920x1080      --pos 0,0    --preferred
+    wlr-randr --output eDP-1    --mode 1920x1080      --pos 0,0
 fi
-
-# Wallpaper
-swww-daemon &
-swww img ~/pic/Wallpaper/User/fedora_01.png
 
 # Statusbar
 dwlb &
 dwlbstatus | dwlb -status-stdin all &
+
+# Wallpaper
+swww-daemon &
+swww img ~/pic/Wallpaper/User/fedora_01.png
 
 # Default GTK Theme, Icon Theme, Cursor Size, Font Name
 gnome_schema="org.gnome.desktop.interface"

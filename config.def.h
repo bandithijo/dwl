@@ -1,3 +1,5 @@
+#include <X11/XF86keysym.h>
+
 /* Taken from https://github.com/djpohly/dwl/issues/466 */
 #define COLOR(hex)    { ((hex >> 24) & 0xFF) / 255.0f, \
                         ((hex >> 16) & 0xFF) / 255.0f, \
@@ -117,8 +119,20 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
+// for terminal emulator
 static const char *termcmd[] = { "foot", NULL };
+// for application launcher
 static const char *menucmd[] = { "bemenu-run", NULL };
+// for changing volume & mute audio via pamixer
+static const char *speakerupvol[] = { "pamixer", "-i", "1", NULL };
+static const char *speakerdownvol[] = { "pamixer", "-d" "1", NULL };
+static const char *speakermute[] = { "pamixer", "--toggle-mute", NULL };
+static const char *microphonemute[] = { "pamixer", "--source 0", "--toggle-mute", NULL };
+// for playerctl
+static const char *playpause[] = { "playerctl", "play-pause", NULL };
+static const char *playstop[] = { "playerctl", "stop", NULL };
+static const char *playnext[] = { "playerctl", "next", NULL };
+static const char *playprev[] = { "playerctl", "previous", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
@@ -157,6 +171,14 @@ static const Key keys[] = {
 	TAGKEYS(          XKB_KEY_8, XKB_KEY_asterisk,                   7),
 	TAGKEYS(          XKB_KEY_9, XKB_KEY_parenleft,                  8),
 	{ MODKEY|WLR_MODIFIER_SHIFT, XKB_KEY_Q,          quit,           {0} },
+	{ 0,                         XF86XK_AudioRaiseVolume, spawn,     {.v = speakerupvol } },
+	{ 0,                         XF86XK_AudioLowerVolume, spawn,     {.v = speakerdownvol } },
+	{ 0,                         XF86XK_AudioMute,   spawn,          {.v = speakermute } },
+	{ 0,                         XF86XK_AudioMicMute, spawn,         {.v = microphonemute } },
+	{ 0,                         XF86XK_AudioPlay,   spawn,          {.v = playpause } },
+	{ 0,                         XF86XK_AudioStop,   spawn,          {.v = playstop } },
+	{ 0,                         XF86XK_AudioNext,   spawn,          {.v = playnext } },
+	{ 0,                         XF86XK_AudioPrev,   spawn,          {.v = playprev } },
 
 	/* Ctrl-Alt-Backspace and Ctrl-Alt-Fx used to be handled by X server */
 	{ WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT,XKB_KEY_Terminate_Server, quit, {0} },

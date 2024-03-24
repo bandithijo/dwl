@@ -326,6 +326,7 @@ static void motionabsolute(struct wl_listener *listener, void *data);
 static void motionnotify(uint32_t time, struct wlr_input_device *device, double sx,
 		double sy, double sx_unaccel, double sy_unaccel);
 static void motionrelative(struct wl_listener *listener, void *data);
+static void movecenter(const Arg *arg);
 static void moveresize(const Arg *arg);
 static void outputmgrapply(struct wl_listener *listener, void *data);
 static void outputmgrapplyortest(struct wlr_output_configuration_v1 *config, int test);
@@ -2099,6 +2100,28 @@ motionrelative(struct wl_listener *listener, void *data)
 	 * the cursor around without any input. */
 	motionnotify(event->time_msec, &event->pointer->base, event->delta_x, event->delta_y,
 			event->unaccel_dx, event->unaccel_dy);
+}
+
+void
+movecenter(const Arg *arg)
+{
+	Client *c = focustop(selmon);
+	Monitor *m = selmon;
+
+	if (!m) {
+		return;
+	}
+
+	if (c) {
+		// const int center_relative_to_monitor = arg->i;
+		struct wlr_box b = center_relative_to_monitor ? m->m : m->w; 
+		resize(c, (struct wlr_box){
+			.x = (b.width - c->geom.width) / 2 + b.x,
+			.y = (b.height - c->geom.height) / 2 + b.y,
+			.width = c->geom.width,
+			.height = c->geom.height,
+		}, 1);
+	}
 }
 
 void

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+systemctl --user import-environment DISPLAY
+
 # Restart Audio Server (Pipewire & Wireplumber)
 systemctl restart --user pipewire.service
 systemctl restart --user wireplumber.service

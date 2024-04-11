@@ -1,0 +1,20 @@
+#!/bin/bash
+
+while true; do
+    pomodoro=$(dwlb-pomo)
+    internet=$(dwlb-internet)
+    cputemp=$(dwlb-cputemp)
+    storage=$(dwlb-storage)
+    memory=$(dwlb-memory)
+    volume=$(dwlb-volume)
+    acstate=$(dwlb-acstate 1)
+    batstate=$(dwlb-batstate 1)
+    batcapacity=$(dwlb-batcap 1)
+    mailbox=$(dwlb-mailbox)
+    datetime=$(dwlb-datetime)
+    user=$(dwlb-user)
+    echo -e "$pomodoro$internet$cputemp $storage $memory $volume$acstate $batstate $batcapacity $mailbox $datetime $user"
+
+    # Wait for some time before updating the status again
+    sleep 1
+done

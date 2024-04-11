@@ -72,6 +72,8 @@ install: dwl
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/startw
 	cp -f scripts/dwlstartup $(DESTDIR)$(PREFIX)/bin
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/dwlstartup
+	cp -f scripts/dwlbstatus $(DESTDIR)$(PREFIX)/bin
+	chmod 755 $(DESTDIR)$(PREFIX)/bin/dwlbstatus
 	cp -f scripts/bemenu-run-apps $(DESTDIR)$(PREFIX)/bin
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/bemenu-run-apps
 	cp -f scripts/status/dwlb-* $(DESTDIR)$(PREFIX)/bin
@@ -82,6 +84,7 @@ uninstall:
 	      $(DESTDIR)$(DATADIR)/wayland-sessions/dwl.desktop \
 	      $(DESTDIR)$(PREFIX)/bin/startw \
 	      $(DESTDIR)$(PREFIX)/bin/dwlstartup \
+	      $(DESTDIR)$(PREFIX)/bin/dwlbstatus \
 	      $(DESTDIR)$(PREFIX)/bin/bemenu-run-apps \
 	      $(DESTDIR)$(PREFIX)/bin/dwlb-*
 
